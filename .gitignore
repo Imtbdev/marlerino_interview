@@ -1,0 +1,4 @@
+test_case/interview/.idea/
+test_case/interview/venv/
+test_case/interview/__pycache__/
+test_case/interview/.env
