@@ -4,7 +4,9 @@ import os
 
 load_dotenv()
 
+#функция для загрузки фильмов в airtable
 def add_to_airtable(movie_list):
+    #подкючение к airtable
     api_key = os.getenv("api_key_air")
     base_id = os.getenv("base_id")
     table_name = os.getenv("table_name")
@@ -12,6 +14,7 @@ def add_to_airtable(movie_list):
     api = Api(api_key)
     table = api.get_table(base_id, table_name)
 
+    #загрузка данных
     if movie_list:
         for movie in movie_list:
             table.create({

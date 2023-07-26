@@ -5,7 +5,7 @@ from main import add_to_airtable
 
 load_dotenv()
 
-
+#Функция для получения информации о конкретном фильме
 def get_movie_info(api_key, movie_title):
     url = 'http://www.omdbapi.com/'
     params = {
@@ -31,7 +31,7 @@ def get_movie_info(api_key, movie_title):
         print(f"Ошибка при запросе к API: {data.get('Error', 'Неизвестная ошибка')}")
         return None
 
-
+#Функция для получения 10 фильмов
 def get_movie_list(api_key, num_movies=10):
     url = 'http://www.omdbapi.com/'
     params = {
@@ -45,7 +45,7 @@ def get_movie_list(api_key, num_movies=10):
 
     if (response.status_code == 200) and ('Search' in data):
         movie_list = data['Search'][:num_movies]
-
+        #для каждого фильма получаем информацию о дате выхода, режиссёре, сценаристе, ссылку на обложку и кратком сюжете
         for movie in movie_list:
             movie_info = get_movie_info(api_key, movie['Title'])
             if movie_info:
@@ -61,6 +61,7 @@ def get_movie_list(api_key, num_movies=10):
 api_key_imdb = os.getenv("api_key_imdb")
 movie_list = get_movie_list(api_key_imdb, num_movies=10)
 
+#Если найдены фильм то отправляем их в функцию для загрузки на airtable
 if movie_list:
     add_to_airtable(movie_list)
 else:
